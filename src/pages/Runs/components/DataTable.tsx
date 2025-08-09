@@ -23,11 +23,17 @@ import { columns } from "./colomns";
 
 export default function DataTable() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [pageIndex, setPageIndex] = React.useState(0);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const pageSize = 2;
+  // Control pagination in a single object so TanStack can manage via onPaginationChange
+  const [{ pageIndex, pageSize }, setPagination] = React.useState({
+    pageIndex: 0,
+    pageSize: 2,
+  });
+  // Control row selection to avoid uncontrolled state + auto resets
+  const [rowSelection, setRowSelection] = React.useState({});
+
   const table = useReactTable({
     data: [
       {
@@ -70,14 +76,15 @@ export default function DataTable() {
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: setPagination,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
-      pagination: {
-        pageIndex,
-        pageSize,
-      },
+      pagination: { pageIndex, pageSize },
       columnFilters,
+      rowSelection,
     },
+    autoResetPageIndex: false, // prevent infinite loop when selection/filtering triggers resets
   });
 
   const filteredRows = table.getFilteredRowModel().rows.length;
@@ -150,22 +157,16 @@ export default function DataTable() {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => {
-              table.setPageIndex(pageIndex - 1);
-              setPageIndex(pageIndex - 1);
-            }}
-            disabled={pageIndex === 0}
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
           >
             Previous
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => {
-              table.setPageIndex(pageIndex + 1);
-              setPageIndex(pageIndex + 1);
-            }}
-            disabled={pageIndex + 1 >= table.getPageCount()}
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
           >
             Next
           </Button>
