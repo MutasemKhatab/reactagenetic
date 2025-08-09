@@ -1,11 +1,11 @@
 import { Line, LineChart, XAxis, YAxis } from "recharts";
-import { Card } from "../../components/ui/card";
-import type { ChartConfig } from "../../components/ui/chart";
+import { Card } from "../../../components/ui/card";
+import type { ChartConfig } from "../../../components/ui/chart";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "../../components/ui/chart";
+} from "../../../components/ui/chart";
 
 const chartConfig = {
   totalRuns: {

@@ -1,6 +1,6 @@
 import { Loader2Icon, Play, RefreshCcw } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 
 export function TitleRow() {
   const [isLoading, setIsLoading] = useState(false);

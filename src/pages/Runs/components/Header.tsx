@@ -1,6 +1,6 @@
 import { ChevronDownIcon, LogOutIcon } from "lucide-react";
 import { useState } from "react";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,14 +10,15 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
-import { Label } from "../../components/ui/label";
+} from "../../../components/ui/dropdown-menu";
+import { Label } from "../../../components/ui/label";
 import {
   NavigationMenu,
   NavigationMenuLink,
   NavigationMenuList,
-} from "../../components/ui/navigation-menu";
-import { Switch } from "../../components/ui/switch";
+} from "../../../components/ui/navigation-menu";
+import { Switch } from "../../../components/ui/switch";
+import switchTheme from "../logic/switchTheme";
 
 export default function Header() {
   const [theme, setTheme] = useState<boolean>(false);
@@ -70,7 +71,7 @@ export default function Header() {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={(e) => {
-              _switchTheme(e, setTheme);
+              switchTheme(e, setTheme);
             }}
           >
             <Label htmlFor="theme">Dark Mode</Label>
@@ -92,20 +93,4 @@ export default function Header() {
       </DropdownMenu>
     </div>
   );
-}
-
-function _switchTheme(
-  e: React.MouseEvent<HTMLDivElement>,
-  setTheme: React.Dispatch<React.SetStateAction<boolean>>
-) {
-  e.preventDefault();
-  e.stopPropagation();
-  const root = document.documentElement;
-  if (root.classList.contains("dark")) {
-    root.classList.remove("dark");
-    setTheme(false);
-  } else {
-    root.classList.add("dark");
-    setTheme(true);
-  }
 }

@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { Badge } from "../../components/ui/badge";
+import { Badge } from "../../../components/ui/badge";
 import {
   Card,
   CardAction,
@@ -7,7 +7,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card";
+} from "../../../components/ui/card";
 
 export function MyCard() {
   return (
