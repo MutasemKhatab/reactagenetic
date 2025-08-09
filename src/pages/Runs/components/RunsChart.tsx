@@ -10,11 +10,11 @@ import {
 const chartConfig = {
   totalRuns: {
     label: "Total Runs",
-    color: "#6366f1",
+    color: "var(--chart-1)",
   },
   successful: {
     label: "Successful",
-    color: "#34d399",
+    color: "var(--chart-2)",
   },
   failed: {
     label: "Failed",

@@ -1,5 +1,4 @@
 import { ChevronDownIcon, LogOutIcon } from "lucide-react";
-import { useState } from "react";
 import { Button } from "../../../components/ui/button";
 import {
   DropdownMenu,
@@ -11,17 +10,15 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
-import { Label } from "../../../components/ui/label";
 import {
   NavigationMenu,
   NavigationMenuLink,
   NavigationMenuList,
 } from "../../../components/ui/navigation-menu";
-import { Switch } from "../../../components/ui/switch";
-import switchTheme from "../logic/switchTheme";
+import { useTheme } from "../../../components/ui/theme-provider";
 
 export default function Header() {
-  const [theme, setTheme] = useState<boolean>(false);
+  const { setTheme } = useTheme();
   const items: { name: string; href: string }[] = [
     {
       name: "Logo",
@@ -48,7 +45,7 @@ export default function Header() {
           {items.map((item) => (
             <NavigationMenuLink
               className={
-                window.location.pathname === item.href ? "text-red-500" : ""
+                window.location.pathname === item.href ? "text-primary" : ""
               }
               key={item.name}
               href={item.href}
@@ -69,15 +66,21 @@ export default function Header() {
           <DropdownMenuItem asChild>
             <DropdownMenuLabel>Account</DropdownMenuLabel>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={(e) => {
-              switchTheme(e, setTheme);
-            }}
-          >
-            <Label htmlFor="theme">Dark Mode</Label>
-            <span className="flex-1" />
-            <Switch id="themeSwitch" checked={theme} />
-          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                System
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>Language</DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
